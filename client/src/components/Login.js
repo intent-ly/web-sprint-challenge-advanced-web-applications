@@ -5,29 +5,28 @@ const Login = (props) => {
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
 
-  const [login, setLogin] = useState({
-    credentials: {
+  const [login, setLogin] = useState(
+    {
       username: '',
       password: ''
     }
-  })
+  )
   
   const handleChange = e => {
     setLogin({
-      credentials: {
+      
         ...login,
         [e.target.name]: e.target.value
       }
-    });
+    );
   };
 
   const handleSubmit = e => {
     e.preventDefault();
-    axiosWithAuth.post('http://localhost:5000/api/login', login)
+    axiosWithAuth().post('http://localhost:5000/api/login', login)
       .then(req => {
         localStorage.setItem("token", req.data.payload);
-        this.props.history.push("/protected");
-        this.props.setLoggedIn(true);
+        props.history.push("/bubblepage");
       })
       .catch(err => {
         console.log(err)
